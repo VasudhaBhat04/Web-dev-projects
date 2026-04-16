@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Picker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        .color-box {
+            width: 150px;
+            height: 150px;
+            border-radius: 10px;
+            border: 2px solid #000;
+        }
+        .copy-btn {
+            padding: 8px 15px;
+            cursor: pointer;
+            border: none;
+            background: #007BFF;
+            color: white;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .copy-btn:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Color Picker 🎨</h1>
+    <div class="container">
+        <input type="color" id="colorPicker">
+        <div class="color-box" id="colorBox"></div>
+        <p>HEX: <span id="hexValue">#000000</span></p>
+        <p>RGB: <span id="rgbValue">rgb(0, 0, 0)</span></p>
+        <button class="copy-btn" onclick="copyColor()">Copy HEX</button>
+    </div>
+
+    <script>
+        const colorPicker = document.getElementById("colorPicker");
+        const colorBox = document.getElementById("colorBox");
+        const hexValue = document.getElementById("hexValue");
+        const rgbValue = document.getElementById("rgbValue");
+
+        colorPicker.addEventListener("input", () => {
+            const color = colorPicker.value;
+            colorBox.style.backgroundColor = color;
+            hexValue.textContent = color;
+            rgbValue.textContent = hexToRgb(color);
+        });
+
+        function hexToRgb(hex) {
+            const r = parseInt(hex.substr(1, 2), 16);
+            const g = parseInt(hex.substr(3, 2), 16);
+            const b = parseInt(hex.substr(5, 2), 16);
+            return `rgb(${r}, ${g}, ${b})`;
+        }
+
+        function copyColor() {
+            navigator.clipboard.writeText(hexValue.textContent);
+            alert("HEX Color Copied: " + hexValue.textContent);
+        }
+    </script>
+
+</body>
+</html>
